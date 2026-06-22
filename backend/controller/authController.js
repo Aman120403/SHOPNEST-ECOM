@@ -1,6 +1,9 @@
 const User = require('../model/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+
+const sendEmail = require("../utils/sendEmail");
+const { get } = require('mongoose');
 const generateToken = async(id)=>{
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"});
 
@@ -19,9 +22,9 @@ const registerUser = async (req,res) =>{
         if(user){
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
             const message = `Welcome to shopnest, ${name}! 
-            Your OTP for Shopnest registratiion is: ${otp}`;
+            Your OTP for Shopnest registration is: ${otp}`;
 
-            await sendEmail(email, 'Welcome to Shopnest - Your OTP for regestration', meassage);
+            await sendEmail(email, 'Welcome to Shopnest - Your OTP for regestration', message);
 
             res.status(201).json({
                 _id: user._id,
@@ -42,3 +45,48 @@ const registerUser = async (req,res) =>{
         
     }
 }
+
+const loginUser =  async(req,res) =>{
+    const {email, password} = req.body;
+
+    try {
+        const user = await User.findOne({email});
+        if(user && (await bcrypt.compare(password, user.password))){
+            res
+            .status(201)
+            .json({
+                _id: user._id,
+                email:user.email,
+                role=user.role,
+                token=generateToken(user._id)
+            });
+
+        }else{
+            res
+            .status(400)
+            .json({
+                message:'Invalid email or password'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({message:"Server error"});
+    }
+}
+
+const getUsers = async(req,res) =>{
+    try {
+        const users = await User.find({}).select('-password');
+        res.
+        status(201)
+        .json(users);
+
+    } catch (error) {
+        res.status(500).json({message:"Server error"});
+    }
+}
+
+module.exports = {
+    registerUser,
+    loginUser,
+    getUsers
+};
