@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const sendEmail = require("../utils/sendEmail");
-const { get } = require('mongoose');
+
+
 const generateToken = async(id)=>{
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"});
 
