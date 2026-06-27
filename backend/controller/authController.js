@@ -5,8 +5,10 @@ const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/sendEmail");
 
 
-const generateToken = async(id)=>{
-    return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"});
+const generateToken = (id)=>{
+    const token = jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "30d"});
+    console.log("token ", token);
+    return token;
 
 };
 //Register a new user
@@ -19,7 +21,7 @@ const registerUser = async (req,res) =>{
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = User.create({name, email, password:hashedPassword});
+        const user = await User.create({name, email, password:hashedPassword});
         if(user){
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
             const message = `Welcome to shopnest, ${name}! 
@@ -58,8 +60,8 @@ const loginUser =  async(req,res) =>{
             .json({
                 _id: user._id,
                 email:user.email,
-                role=user.role,
-                token=generateToken(user._id)
+                role:user.role,
+                token:generateToken(user._id)
             });
 
         }else{
@@ -87,6 +89,7 @@ const getUsers = async(req,res) =>{
 }
 
 module.exports = {
+    generateToken,
     registerUser,
     loginUser,
     getUsers

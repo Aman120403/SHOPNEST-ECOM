@@ -12,4 +12,4 @@ router.get("/currentUser",protect, admin, getUsers);
 
 
 
-module.exports = {router};
+module.exports = router;
