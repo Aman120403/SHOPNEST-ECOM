@@ -49,6 +49,7 @@ const registerUser = async (req,res) =>{
     }
 }
 
+//Login page api
 const loginUser =  async(req,res) =>{
     const {email, password} = req.body;
 
@@ -75,7 +76,7 @@ const loginUser =  async(req,res) =>{
         res.status(500).json({message:"Server error"});
     }
 }
-
+// Get current user
 const getUsers = async(req,res) =>{
     try {
         const users = await User.find({}).select('-password');
