@@ -1,5 +1,5 @@
 const express = require('express');
-const { getProducts, createProduct, getProductById } = require('../controller/productController');
+const { getProducts, createProduct, getProductById, updateProduct, deleteProduct } = require('../controller/productController');
 const { protect } = require('../middleware/authMiddleware');
 const { admin } = require('../middleware/adminMiddleware');
 
@@ -13,4 +13,6 @@ router.route('/').get(getProducts).post(protect, admin, upload.single('image'), 
 
 //Specific product
 
-router.route('/:id').get(getProductById).put(protect, admin,upload.single('image'),)
+router.route('/:id').get(getProductById).put(protect, admin,upload.single('image'),updateProduct).delete(deleteProduct);
+
+module.exports =  router;
