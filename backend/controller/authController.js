@@ -14,6 +14,7 @@ const generateToken = (id)=>{
 //Register a new user
 const registerUser = async (req,res) =>{
     const {name, email, password} = req.body;
+    console.log("Email_user ", process.env.EMAIL_USER);
     try {
         const existingUser = await User.findOne({email});
         if(existingUser){
@@ -53,6 +54,62 @@ const registerUser = async (req,res) =>{
     }
 }
 
+//Api for verifying otp
+
+const verifyOtp = async (req, res) => {
+    try{
+        const { email, otp } = req.body;
+        const user = await User.findOne({ email });
+        if(!user){
+            return res.status(400).json({ message: "User not found" });
+        }
+        if (user.isVerified) {
+            return res.status(400).json({ message: "User is already verified" });
+        }
+        if(user.otp !== otp){
+            return res.status(400).json({ message: "Invalid OTP" });
+        }
+        if(user.otpExpiry < Date.now()){
+            return res.status(400).json({ message: "OTP expired" });
+        }
+        user.isVerified = true;
+        user.otp = undefined;
+        user.otpExpiry = undefined;
+        await user.save();
+        res.status(200).json({ message: "Account verified successfully" });
+
+
+    }
+    catch(error){
+        console.error("Error during OTP verification: ", error);
+        res.status(500).json({ message: "Server error during OTP verification" });
+    }
+};
+//Api for resending otp
+const resendOtp = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }  
+        if (user.isVerified) {
+            return res.status(400).json({ message: "User is already verified" });
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpiry = Date.now() + 10 * 60 * 1000;
+        user.otp = otp;
+        user.otpExpiry = otpExpiry;
+        await user.save();
+        const message = `Your new OTP for Shopnest registration is: ${otp}\nThis code expires in 10 minutes.`;
+        await sendEmail(email, 'Shopnest - Your new OTP for registration', message);
+        res.status(200).json({ message: "New OTP sent to your email" });   
+    } catch (error) {
+        console.error("Error during OTP resend: ", error);
+        res.status(500).json({ message: "Server error during OTP resend" });
+    }
+
+};
 //Login page api
 const loginUser =  async(req,res) =>{
     const {email, password} = req.body;
@@ -80,6 +137,8 @@ const loginUser =  async(req,res) =>{
         res.status(500).json({message:"Server error"});
     }
 }
+
+
 // Get current user
 const getUsers = async(req,res) =>{
     try {
@@ -97,5 +156,7 @@ module.exports = {
     generateToken,
     registerUser,
     loginUser,
-    getUsers
+    getUsers,
+    verifyOtp,
+    resendOtp
 };
