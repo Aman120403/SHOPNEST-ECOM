@@ -21,20 +21,24 @@ const registerUser = async (req,res) =>{
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await User.create({name, email, password:hashedPassword});
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpiry = Date.now() + 10 * 60 * 1000; // valid for 10 minutes
+        console.log("otp ", otp);
+        console.log("otpExpiry ", otpExpiry);
+        const user = await User.create({name, email, password:hashedPassword, otp, otpExpiry});
         if(user){
-            const otp = Math.floor(100000 + Math.random() * 900000).toString();
             const message = `Welcome to shopnest, ${name}! 
             Your OTP for Shopnest registration is: ${otp}`;
 
-            await sendEmail(email, 'Welcome to Shopnest - Your OTP for regestration', message);
+            await sendEmail(email, 'Welcome to Shopnest - Your OTP for registration', message);
 
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                token: generateToken(user._id)
+                token: generateToken(user._id),
+                message:"Registration successful. OTP sent to your email. Please verify to activate your account."
 
             });
         }

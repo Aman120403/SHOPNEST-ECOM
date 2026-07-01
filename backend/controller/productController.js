@@ -38,7 +38,7 @@ const createProduct = async(req,res) =>{
         let imageUrl = '';
         if(req.file){
             const result = await cloudinary.uploader.upload(req.file.path);
-            console.log(result);
+            console.log("result ", result);
             imageUrl =  result.secure_url;
 
         }
@@ -94,7 +94,7 @@ const deleteProduct = async (req,res) =>{
         const product = await Product.findById(req.params.id);
 
         if(product){
-            await product.remove();
+            await product.deleteOne();
             res.status(201).json({message: 'Product removed'});
         }
         else{
