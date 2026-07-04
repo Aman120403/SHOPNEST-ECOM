@@ -12,7 +12,7 @@ const createOrder = async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' });
         }
         
-        console.log("User ID:", req.user._id);
+        //console.log("User ID:", req.user._id);
         
         const order = new Order({
             user: req.user._id,
