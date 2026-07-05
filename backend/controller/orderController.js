@@ -42,8 +42,7 @@ const myOrders = async (req, res) => {
 const getOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('user', 'id name');
-        res.status(200).json({ message: 'Orders retrieved successfully', orders });
-    }   catch (error) {         
+         }   catch (error) {         
         res.status(400).json({ message: error.message });
     }   
 

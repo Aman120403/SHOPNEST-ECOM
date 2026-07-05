@@ -5,16 +5,19 @@ dotenv = require("dotenv").config();
 
 const createdOrder = async (req, res) => {
     try {
+        //This authenticates your server with Razorpay using your account's API keys 
         const instance = new razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_KEY_SECRET,
 
         });
+        // Build the order options
         const options = {
             amount: req.body.amount * 100, // amount in the smallest currency unit  
             currency: "INR",
             receipt: crypto.randomBytes(10).toString("hex")
         };
+        //This sends a request to Razorpay's servers. Razorpay creates an order on their end and sends back an order object
         const order = await instance.orders.create(options);
         res.status(200).json({ message: "Order created successfully", order });
     } catch (error) {
