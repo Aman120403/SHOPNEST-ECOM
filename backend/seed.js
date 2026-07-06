@@ -9,10 +9,17 @@ const Product = require('./model/Product');
 
 const seedData = async () => {
   try {
-    await   connectDB();
+    console.log('Starting seed process...');
+    console.log('MONGO_URI:', process.env.MONGO_URI ? 'Set' : 'NOT SET');
+    
+    console.log('Connecting to MongoDB...');
+    await connectDB();
+    console.log('Connected to MongoDB successfully');
 
-    await User.deleteMany({});
-    await Product.deleteMany({});
+    console.log('Clearing existing data...');
+    const deletedUsers = await User.deleteMany({});
+    const deletedProducts = await Product.deleteMany({});
+    console.log(`Deleted ${deletedUsers.deletedCount} users and ${deletedProducts.deletedCount} products`);
 
     const hashedPassword = await bcrypt.hash('123456', 10);
     const adminPassword = await bcrypt.hash('admin123', 10);
@@ -74,14 +81,19 @@ const seedData = async () => {
       },
     ];
 
-    await User.insertMany(users);
-    await Product.insertMany(products);
+    console.log('Inserting users...');
+    const createdUsers = await User.insertMany(users);
+    console.log(`${createdUsers.length} users inserted`);
 
-    console.log('Seed data inserted successfully');
+    console.log('Inserting products...');
+    const createdProducts = await Product.insertMany(products);
+    console.log(`${createdProducts.length} products inserted`);
+
+    console.log('✓ Seed data inserted successfully!');
+    process.exit(0);
   } catch (error) {
-    console.error('Seed failed:', error.message);
-  } finally {
-    await mongoose.disconnect();
+    console.error('✗ Seed failed:', error);
+    process.exit(1);
   }
 };
 
