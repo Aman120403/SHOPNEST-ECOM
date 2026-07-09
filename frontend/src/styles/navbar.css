@@ -1,0 +1,25 @@
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem;
+    background-color: rgba(9,9,1,0.8);  
+    
+    color:white;
+}
+
+.navbar .navbar-logo{
+    font-size:1.5rem;
+    font-weight:bold;   
+
+}
+.navbar .navbar-brand img {
+    height: 40px;       /* controls overall logo size */
+    width: auto;        /* preserves aspect ratio */
+    object-fit: contain;
+}
+
+.navbar .navbar-links{
+    display:flex;
+    gap:1rem;
+}

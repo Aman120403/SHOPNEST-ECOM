@@ -1,14 +1,23 @@
 import React from 'react';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Footer from './components/Footer';
+
+
 const App = () => {
   return (
-    <div>   
-
-        <h1>Welcome to the React App!
-
-        </h1>
-    </div>
+    <Router>
+        <Navbar />
+        <Routes>
+            <Route path="/" element={<Home />} />
+            {/* <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} /> */}
+        </Routes>
+        <Footer />
+    </Router>
 
   )};
-
+  
 export default App;
