@@ -1,0 +1,31 @@
+{
+  "name": "shopnest-full-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "install": "cd frontend && npm install && cd ../backend && npm install",  
+    "dev:server": "cd backend && npm run dev",
+    "dev:client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "cd frontend && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aman120403/SHOPNEST-ECOM.git"
+  },
+  "keywords": [
+    "aman's",
+    "shopnest"
+  ],
+  "author": "aman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aman120403/SHOPNEST-ECOM/issues"
+  },
+  "homepage": "https://github.com/Aman120403/SHOPNEST-ECOM#readme",
+  "dependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
