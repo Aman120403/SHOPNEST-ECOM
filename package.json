@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "install": "cd frontend && npm install && cd ../backend && npm install",  
+    "install": "cd frontend && npm install && cd ../backend && npm install",
     "dev:server": "cd backend && npm run dev",
     "dev:client": "cd frontend && npm start",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Aman120403/SHOPNEST-ECOM#readme",
   "dependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^10.0.3",
+    "react-redux": "^9.3.0"
   }
 }

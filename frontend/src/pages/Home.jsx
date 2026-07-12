@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
-import '../styles/home.css';
+//import '../styles/home.css';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -26,8 +26,8 @@ const Home = () => {
     }, []);
 
     return (    
-        <div>
-            <div>
+        <div className="home-container">
+            <div className="hero-banner"> 
                 <h1>Welcome to Shopnest</h1>
                 <p>Your one-stop shop for all your needs!</p>
                 <Link to="/shop">Start Shopping</Link>
