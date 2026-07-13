@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
 import logo from '../assets/Shopnest-logo.png';
-import { useContext, useSelector, useNavigate } from 'react';
+import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
 
     const {user, logout} = useContext(AuthContext);
-    const cartItems = useSelector((state) => state.cart.items);
+    const cartItems = useSelector((state) => state.cart.cartItems);
 
     const navigate = useNavigate();
 
@@ -24,8 +25,9 @@ return (
             <img src={logo} alt="Shopnest-logo" className="navbar-logo" />
             Shopnest
             </Link> 
+        </div>
 
-            <ul className="navbar-links">
+        <ul className="navbar-links">
             <li>
                 <Link to="/shop">Shop</Link>
             </li>
@@ -49,8 +51,7 @@ return (
             ): (
                 <li><Link to="/login">Login</Link></li>
             )}
-            </ul>
-        </div>
+        </ul>
     </nav>
 )};
 
