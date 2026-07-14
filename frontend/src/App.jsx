@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import About from './pages/About';
 import ReturnPolicy from './pages/ReturnPolicy';
 import Disclaimer from './pages/Disclaimer';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 const App = () => {
@@ -18,6 +20,10 @@ const App = () => {
             <Route path="/about" element={<About/>} />
             <Route path="/disclaimer" element={<Disclaimer/>} />
             <Route path="/return" element={<ReturnPolicy/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register/>} />
+
+
         </Routes>
         <Footer />
     </Router>
