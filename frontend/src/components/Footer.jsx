@@ -26,9 +26,8 @@ const Footer = () => {
 
             <div style={{ display: 'flex', gap: '20px'}}>
                 <Link to="/about" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>About Us</Link>
-                <Link to="/contact" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>Contact</Link>
-                <Link to="/privacy" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>Privacy Policy</Link>
-                <Link to="/terms" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>Terms of Service</Link>
+                <Link to="/return" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>Return Policy</Link>
+                <Link to="/disclaimer" style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>Disclaimer</Link>
             </div>
             <div style={{ color: '#1a1a1a', fontSize: '0.9rem' }}>
                 &copy; {new Date().getFullYear()} Shopnest. All rights reserved.
