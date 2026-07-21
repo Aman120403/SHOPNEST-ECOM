@@ -23,7 +23,7 @@ const App = () => {
             <Route path="/return" element={<ReturnPolicy/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
-            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/products/:id" element={<ProductDetail/>} />
 
 
         </Routes>

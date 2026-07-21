@@ -14,6 +14,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`/api/products/${id}`);
+        console.log("res: ", res);
         const data = await res.json();
         setProduct(data);
       } catch (error) {

@@ -75,7 +75,7 @@ const seedData = async () => {
         price: 899,
         category: 'Accessories',
         stock: 20,
-        imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+        imageUrl: 'https://www.fingers.co.in/secure/api/uploads/products/1747386406_1.png',
         rating: 4.0,
         numReviews: 6,
       },
