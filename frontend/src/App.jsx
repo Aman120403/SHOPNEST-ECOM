@@ -9,6 +9,7 @@ import ReturnPolicy from './pages/ReturnPolicy';
 import Disclaimer from './pages/Disclaimer';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProductDetail from './pages/ProductDetail';
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/return" element={<ReturnPolicy/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
+            <Route path="/products/:id" element={<ProductDetail />} />
 
 
         </Routes>
