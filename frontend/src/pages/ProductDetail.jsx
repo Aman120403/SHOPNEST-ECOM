@@ -16,6 +16,7 @@ const ProductDetail = () => {
         const res = await fetch(`/api/products/${id}`);
         console.log("res: ", res);
         const data = await res.json();
+        console.log("data: ", data);
         setProduct(data);
       } catch (error) {
         console.error(error);
@@ -27,6 +28,7 @@ const ProductDetail = () => {
   }, [id]);
 
   const handleAddToCart = () => {
+    console.log("Added to cart");
     if (product) {
       dispatch(addToCart({
         productId: product._id,

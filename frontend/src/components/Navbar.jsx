@@ -10,6 +10,7 @@ const Navbar = () => {
 
     const {user, logout} = useContext(AuthContext);
     const cartItems = useSelector((state) => state.cart.cartItems);
+    console.log("cartItems: ", cartItems.length);
 
     const navigate = useNavigate();
 
