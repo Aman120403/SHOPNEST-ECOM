@@ -132,7 +132,11 @@
   max-width: 600px;
   margin: 0 auto;
 }
-
+.checkout-container h2{
+   margin-left: 25px;
+   margin-top: 15px;
+   color: #4b2509;
+}
 .shipping-form {
   display: flex;
   flex-direction: column;
