@@ -24,11 +24,13 @@ const Checkout = () => {
         body: JSON.stringify({ amount: totalPrice })
       });
       const orderData = await orderRes.json();
-
+      console.log("orderData", orderData)
       if (!orderRes.ok) {
         // Razorpay unconfigured exception handler
         const fallback = window.confirm("Razorpay keys unconfigured on backend. Use Student Bypass Mode to place test order?");
+        console.log("fallback: ", fallback)
         if (fallback) {
+
           return bypassPayment();
         } else {
           return alert("Payment failed to initialize");
@@ -91,6 +93,7 @@ const Checkout = () => {
   };
 
   const bypassPayment = async () => {
+    console.log("I am at bypass")
     const saveOrderRes = await fetch('/api/orders', {
       method: 'POST',
       headers: { 
@@ -104,8 +107,10 @@ const Checkout = () => {
         paymentId: 'bypass_txn_' + Date.now()
       })
     });
+    console.log("saveOrderRes:", saveOrderRes)
     if (saveOrderRes.ok) {
       dispatch(clearCart());
+      console.log("orderSuccess called");
       navigate('/ordersuccess');
     }
   };

@@ -12,6 +12,7 @@ const OrderSuccess = () => {
     boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
     textAlign: 'center'
   };
+  console.log("i am in order success page");
 
   return (
     <div style={containerStyle}>

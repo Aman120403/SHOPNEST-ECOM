@@ -21,6 +21,7 @@ const createdOrder = async (req, res) => {
         const order = await instance.orders.create(options);
         res.status(200).json({ message: "Order created successfully", order });
     } catch (error) {
+        console.log("error: ", error)
         res.status(400).json({ message: error.message });
     }           
 };
