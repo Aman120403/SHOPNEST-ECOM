@@ -36,21 +36,23 @@ const Checkout = () => {
           return alert("Payment failed to initialize");
         }
       }
-
+//This is the Razorpay Checkout configuration object. It tells Razorpay how the payment window should look and what should happen after payment.
       const options = {
-        key: 'rzp_test_dummykey123', // Student dummy fallback
-        amount: orderData.amount,
+        key: 'rzp_test_dummykey123',//Without the key, Razorpay doesn't know who should receive the payment.
+        amount: orderData.amount, //Razorpay expects the amount in the smallest currency unit i.e. paise
         currency: orderData.currency,
         name: 'ShopNest',
         description: 'Test Transaction',
         order_id: orderData.id,
-        handler: async function (response) {
+        handler: async function (response) { //This function runs after the payment succeeds.
+          //You don't create response. Razorpay creates it and sends it to you. It contains the payment ID, order ID, and signature.
           const verifyRes = await fetch('/api/payment/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(response)
           });
           if (verifyRes.ok) {
+            //now payment is verified, we can save the order in the database
             const saveOrderRes = await fetch('/api/orders', {
               method: 'POST',
               headers: { 
@@ -66,7 +68,7 @@ const Checkout = () => {
             });
 
             if (saveOrderRes.ok) {
-              dispatch(clearCart());
+              dispatch(clearCart());//This clears the cart in the Redux store after the order is successfully saved in the database.
               navigate('/ordersuccess');
             } else {
               alert('Order saving failed');
@@ -75,6 +77,7 @@ const Checkout = () => {
             alert('Payment verification failed');
           }
         },
+        //This automatically fills customer details.
         prefill: {
           name: address.fullName,
           email: user?.email,
@@ -86,7 +89,8 @@ const Checkout = () => {
       };
       
       const rzp1 = new window.Razorpay(options);
-      rzp1.open();
+      //This creates a new Razorpay instance with the above configuration.
+      rzp1.open();//This opens the Razorpay payment window.
     } catch (error) {
       console.error(error);
     }
